@@ -12,9 +12,9 @@
     "logo": "shopify://shop_images/Feinback_Logo_full_black_2bbc4753-7352-4295-ba3c-2bb544f539f9.svg",
     "logo_width": 120,
     "favicon": "shopify://shop_images/Feinback_imagemark_blk.png",
-    "type_header_font": "assistant_n4",
+    "type_header_font": "inter_n7",
     "heading_scale": 100,
-    "type_body_font": "assistant_n4",
+    "type_body_font": "montserrat_n4",
     "body_scale": 100,
     "page_width": 1200,
     "spacing_sections": 0,
@@ -22,7 +22,7 @@
     "spacing_grid_vertical": 8,
     "buttons_border_thickness": 1,
     "buttons_border_opacity": 100,
-    "buttons_radius": 0,
+    "buttons_radius": 10,
     "buttons_shadow_opacity": 0,
     "buttons_shadow_horizontal_offset": 0,
     "buttons_shadow_vertical_offset": 4,
@@ -151,12 +151,12 @@
       },
       "scheme-2": {
         "settings": {
-          "background": "#f3f3f3",
+          "background": "#fff8f1",
           "background_gradient": "",
           "text": "#121212",
-          "button": "#121212",
+          "button": "#ff5c51",
           "button_label": "#f3f3f3",
-          "secondary_button_label": "#121212",
+          "secondary_button_label": "#ff5c51",
           "shadow": "#121212"
         }
       },
@@ -190,6 +190,17 @@
           "button": "#ffffff",
           "button_label": "#334fb4",
           "secondary_button_label": "#ffffff",
+          "shadow": "#121212"
+        }
+      },
+      "scheme-d59e278e-da48-47a3-b90d-c215104731ca": {
+        "settings": {
+          "background": "#ffffff",
+          "background_gradient": "",
+          "text": "#121212",
+          "button": "#121212",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#121212",
           "shadow": "#121212"
         }
       }
