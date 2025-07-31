@@ -381,10 +381,10 @@ blockquote {
 }
 
 .caption-with-letter-spacing {
-  font-size: 1rem;
-  letter-spacing: 0.13rem;
-  line-height: calc(1 + 0.2 / var(--font-body-scale));
+  font-family: var(--font-heading-family);
+  letter-spacing: 1px;
   text-transform: uppercase;
+  font-size: 1rem;
 }
 
 .caption-with-letter-spacing--medium {
@@ -1953,9 +1953,9 @@ input[type='checkbox'] {
   margin-right: calc(var(--inputs-border-width));
 }
 
-.quantity__button .svg-wrapper {
-  width: 1rem;
+.quantity[aria-disabled="true"] {
   pointer-events: none;
+  cursor: default;
 }
 
 .quantity__button:focus-visible,
@@ -1991,6 +1991,7 @@ input[type='checkbox'] {
 
 .quantity__input[type='number'] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .quantity__rules {
@@ -2659,6 +2660,7 @@ details[open] .modal-overlay::after {
 
 .search-modal {
   opacity: 0;
+ 
   border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
   min-height: calc(100% + var(--inputs-margin-offset) + (2 * var(--inputs-border-width)));
   height: 100%;
