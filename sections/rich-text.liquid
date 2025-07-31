@@ -22,7 +22,7 @@
           {%- case block.type -%}
             {%- when 'icon' -%}
               <div
-                class="rich-text__icon{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                class="rich-text__icon rich-text__icon--{{ block.settings.icon_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
                 {{ block.shopify_attributes }}
                 {% if settings.animations_reveal_on_scroll %}
                   data-cascade
@@ -30,8 +30,15 @@
                 {% endif %}
               >
                 {%- if block.settings.icon != 'none' -%}
-                  {%- assign file = block.settings.icon | replace: '_', '-' | prepend: 'icon-' | append: '.svg' -%}
-                  <span class="svg-wrapper">{{ file | inline_asset_content }}</span>
+                  {%- if block.settings.icon contains 'custom-' -%}
+                    {%- comment -%} Custom SVG icons {%- endcomment -%}
+                    {%- assign file = block.settings.icon | prepend: 'icon-' | append: '.svg' -%}
+                    <span class="svg-wrapper">{{ file | inline_asset_content }}</span>
+                  {%- else -%}
+                    {%- comment -%} Default Dawn theme icons {%- endcomment -%}
+                    {%- assign file = block.settings.icon | replace: '_', '-' | prepend: 'icon-' | append: '.svg' -%}
+                    <span class="svg-wrapper">{{ file | inline_asset_content }}</span>
+                  {%- endif -%}
                 {%- endif -%}
               </div>
             {%- when 'heading' -%}
@@ -209,6 +216,26 @@
               "label": "None"
             },
             {
+              "value": "sunrise",
+              "label": "Sunrise"
+            },
+            {
+              "value": "newsletter",
+              "label": "Newsletter"
+            },
+            {
+              "value": "gift",
+              "label": "Gift Sets"
+            },
+            {
+              "value": "breadology",
+              "label": "Breadology"
+            },
+            {
+              "value": "custom-email",
+              "label": "Email"
+            },
+            {
               "value": "apple",
               "label": "Apple"
             },
@@ -217,172 +244,40 @@
               "label": "Banana"
             },
             {
-              "value": "bottle",
-              "label": "Bottle"
-            },
-            {
-              "value": "box",
-              "label": "Box"
-            },
-            {
-              "value": "carrot",
-              "label": "Carrot"
-            },
-            {
-              "value": "chat_bubble",
-              "label": "Chat bubble"
-            },
-            {
               "value": "check_mark",
               "label": "Check mark"
-            },
-            {
-              "value": "clipboard",
-              "label": "Clipboard"
-            },
-            {
-              "value": "dairy",
-              "label": "Dairy"
-            },
-            {
-              "value": "dairy_free",
-              "label": "Dairy free"
-            },
-            {
-              "value": "dryer",
-              "label": "Dryer"
-            },
-            {
-              "value": "eye",
-              "label": "Eye"
-            },
-            {
-              "value": "fire",
-              "label": "Fire"
-            },
-            {
-              "value": "gluten_free",
-              "label": "Gluten free"
             },
             {
               "value": "heart",
               "label": "Heart"
             },
             {
-              "value": "iron",
-              "label": "Iron"
-            },
-            {
-              "value": "leaf",
-              "label": "Leaf"
-            },
-            {
-              "value": "leather",
-              "label": "Leather"
-            },
-            {
-              "value": "lightning_bolt",
-              "label": "Lightning bolt"
-            },
-            {
-              "value": "lipstick",
-              "label": "Lipstick"
-            },
-            {
-              "value": "lock",
-              "label": "Lock"
-            },
-            {
-              "value": "map_pin",
-              "label": "Map pin"
-            },
-            {
-              "value": "nut_free",
-              "label": "Nut free"
-            },
-            {
-              "value": "pants",
-              "label": "Pants"
-            },
-            {
-              "value": "paw_print",
-              "label": "Paw print"
-            },
-            {
-              "value": "pepper",
-              "label": "Pepper"
-            },
-            {
-              "value": "perfume",
-              "label": "Perfume"
-            },
-            {
-              "value": "plane",
-              "label": "Plane"
-            },
-            {
-              "value": "plant",
-              "label": "Plant"
-            },
-            {
-              "value": "price_tag",
-              "label": "Price tag"
-            },
-            {
-              "value": "question_mark",
-              "label": "Question mark"
-            },
-            {
-              "value": "recycle",
-              "label": "Recycle"
-            },
-            {
-              "value": "return",
-              "label": "Return"
-            },
-            {
-              "value": "ruler",
-              "label": "Ruler"
-            },
-            {
-              "value": "serving_dish",
-              "label": "Serving dish"
-            },
-            {
-              "value": "shirt",
-              "label": "Shirt"
-            },
-            {
-              "value": "shoe",
-              "label": "Shoe"
-            },
-            {
-              "value": "silhouette",
-              "label": "Silhouette"
-            },
-            {
-              "value": "snowflake",
-              "label": "Snowflake"
-            },
-            {
               "value": "star",
               "label": "Star"
-            },
-            {
-              "value": "stopwatch",
-              "label": "Stopwatch"
-            },
-            {
-              "value": "truck",
-              "label": "Truck"
-            },
-            {
-              "value": "washing",
-              "label": "Washing"
             }
           ],
           "default": "check_mark",
           "label": "Icon"
+        },
+        {
+          "type": "select",
+          "id": "icon_size",
+          "options": [
+            {
+              "value": "small",
+              "label": "Small"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ],
+          "default": "medium",
+          "label": "Icon size"
         }
       ]
     },

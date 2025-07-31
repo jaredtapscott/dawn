@@ -92,11 +92,24 @@
 }
 
 .rich-text__icon .svg-wrapper {
-  width: 4rem;
-  height: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.rich-text__icon--small .svg-wrapper {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.rich-text__icon--medium .svg-wrapper {
+  width: 4rem;
+  height: 4rem;
+}
+
+.rich-text__icon--large .svg-wrapper {
+  width: 6rem;
+  height: 6rem;
 }
 
 .rich-text__icon svg {
