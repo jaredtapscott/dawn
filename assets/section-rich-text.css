@@ -108,8 +108,8 @@
 }
 
 .rich-text__icon--large .svg-wrapper {
-  width: 6rem;
-  height: 6rem;
+  width: 10rem;
+  height: 10rem;
 }
 
 .rich-text__icon svg {
@@ -124,4 +124,12 @@
 
 .rich-text__blocks.right .rich-text__icon {
   justify-content: flex-end;
+}
+
+/* Uppercase heading style */
+.uppercase {
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
 }

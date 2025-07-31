@@ -59,11 +59,18 @@
     "rich_text": {
       "type": "rich-text",
       "blocks": {
+        "icon_fYtkj7": {
+          "type": "icon",
+          "settings": {
+            "icon": "sunrise",
+            "icon_size": "large"
+          }
+        },
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Talk about your brand",
-            "heading_size": "h1"
+            "heading": "The Ritual Series",
+            "heading_size": "uppercase"
           }
         },
         "text": {
@@ -74,6 +81,7 @@
         }
       },
       "block_order": [
+        "icon_fYtkj7",
         "heading",
         "text"
       ],
@@ -90,18 +98,18 @@
       "type": "featured-collection",
       "settings": {
         "collection": "all",
-        "products_to_show": 8,
-        "title": "Featured products",
+        "products_to_show": 4,
+        "title": "",
         "heading_size": "h2",
         "description": "",
         "show_description": false,
-        "description_style": "body",
+        "description_style": "subtitle",
         "columns_desktop": 4,
         "enable_desktop_slider": false,
         "full_width": false,
-        "show_view_all": false,
+        "show_view_all": true,
         "view_all_style": "solid",
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-2",
         "image_ratio": "adapt",
         "image_shape": "default",
         "show_secondary_image": true,
@@ -110,8 +118,8 @@
         "quick_add": "none",
         "columns_mobile": "2",
         "swipe_on_mobile": false,
-        "padding_top": 28,
-        "padding_bottom": 36
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
     "collage": {

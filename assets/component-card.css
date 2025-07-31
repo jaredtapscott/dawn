@@ -190,6 +190,45 @@
   text-align: left;
 }
 
+/* Short description styling */
+.card__short-description {
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+/* Card footer with price and button */
+.card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.card__footer-price {
+  flex: 1;
+}
+
+/* Price styling to match product title */
+.card__footer-price .price {
+  font-family: var(--font-body-family);
+  font-weight: bold;
+}
+
+.card__footer-button {
+  flex-shrink: 0;
+}
+
+.card__button {
+  font-size: 0.85rem;
+  padding: 0.6rem 1rem;
+  white-space: nowrap;
+  min-width: auto;
+}
+
 @media screen and (min-width: 990px) {
   .grid--6-col-desktop .card__content quick-add-bulk .quantity {
     width: auto;
@@ -303,6 +342,9 @@
 .card__heading {
   margin-top: 0;
   margin-bottom: 0;
+  font-family: var(--font-body-family);
+  font-weight: bold;
+  font-size: inherit;
 }
 
 .card__heading:last-child {
