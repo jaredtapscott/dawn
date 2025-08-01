@@ -1,0 +1,270 @@
+{{ 'section-testimonial-slider.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="testimonial-slider section-{{ section.id }}-padding">
+    <div class="page-width">
+      <div class="testimonial-slider__grid">
+        <!-- First Column: Heading and Star Rating -->
+        <div class="testimonial-slider__content">
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'heading' %}
+                <h2 class="testimonial-slider__heading inline-richtext {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+                  {{ block.settings.heading }}
+                </h2>
+              {% when 'star_rating' %}
+                <div class="testimonial-slider__rating" {{ block.shopify_attributes }}>
+                  <div class="star-rating">
+                    {% assign rating = block.settings.rating %}
+                    {% assign full_stars = rating | floor %}
+                    {% assign decimal_part = rating | modulo: 1 %}
+                    {% assign has_half_star = false %}
+                    {% if decimal_part >= 0.5 %}
+                      {% assign has_half_star = true %}
+                    {% endif %}
+                    
+                    <!-- Full stars -->
+                    {% for i in (1..full_stars) %}
+                      <span class="star star--full">★</span>
+                    {% endfor %}
+                    
+                    <!-- Half star -->
+                    {% if has_half_star %}
+                      <span class="star star--half">★</span>
+                    {% endif %}
+                    
+                    <!-- Empty stars -->
+                    {% assign empty_stars = 5 | minus: full_stars %}
+                    {% if has_half_star %}
+                      {% assign empty_stars = empty_stars | minus: 1 %}
+                    {% endif %}
+                    {% for i in (1..empty_stars) %}
+                      <span class="star star--empty">☆</span>
+                    {% endfor %}
+                  </div>
+                  <span class="rating-text">{{ rating }}/5.0</span>
+                </div>
+            {% endcase %}
+          {% endfor %}
+        </div>
+
+        <!-- Second Column: Image -->
+        <div class="testimonial-slider__image">
+          {% if section.settings.image != blank %}
+            {%- assign image_height = section.settings.image.width | divided_by: section.settings.image.aspect_ratio -%}
+            {{ section.settings.image | image_url: width: 600 | image_tag:
+              loading: 'lazy',
+              width: section.settings.image.width,
+              height: image_height,
+              class: 'testimonial-slider__img'
+            }}
+          {% else %}
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg testimonial-slider__img' }}
+          {% endif %}
+        </div>
+
+        <!-- Third Column: Testimonial Slider -->
+        <div class="testimonial-slider__testimonials">
+          <slider-component class="slider-mobile-gutter">
+            <div class="slider slider--mobile" id="Slider-{{ section.id }}">
+              {% assign testimonials = section.blocks | where: 'type', 'testimonial' %}
+              {% for block in testimonials %}
+                <div class="slider__slide testimonial-slide" {{ block.shopify_attributes }}>
+                  <div class="testimonial-card">
+                    {% if block.settings.testimonial_heading != blank %}
+                      <h3 class="testimonial-card__heading">{{ block.settings.testimonial_heading }}</h3>
+                    {% endif %}
+                    {% if block.settings.testimonial_text != blank %}
+                      <div class="testimonial-card__text">
+                        {{ block.settings.testimonial_text }}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            
+            {% if testimonials.size > 1 %}
+              <div class="slider-buttons no-js-hidden">
+                <button type="button" class="slider-button slider-button--prev" name="previous" aria-label="Previous slide">
+                  {{- 'icon-caret.svg' | inline_asset_content -}}
+                </button>
+                <button type="button" class="slider-button slider-button--next" name="next" aria-label="Next slide">
+                  {{- 'icon-caret.svg' | inline_asset_content -}}
+                </button>
+              </div>
+            {% endif %}
+          </slider-component>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimonial Slider",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "Customer Reviews",
+          "label": "Heading"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            {
+              "value": "h2",
+              "label": "Small"
+            },
+            {
+              "value": "h1",
+              "label": "Medium"
+            },
+            {
+              "value": "h0",
+              "label": "Large"
+            },
+            {
+              "value": "hxl",
+              "label": "Extra large"
+            },
+            {
+              "value": "hxxl",
+              "label": "XX Large"
+            }
+          ],
+          "default": "h1",
+          "label": "Heading size"
+        }
+      ]
+    },
+    {
+      "type": "star_rating",
+      "name": "Star Rating",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "number",
+          "id": "rating",
+          "label": "Rating",
+          "info": "Enter a decimal number from 0 to 5 (e.g., 4.5)",
+          "default": 5.0
+        }
+      ]
+    },
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "text",
+          "id": "testimonial_heading",
+          "label": "Testimonial Heading",
+          "default": "Amazing Product!"
+        },
+        {
+          "type": "richtext",
+          "id": "testimonial_text",
+          "label": "Testimonial Text",
+          "default": "<p>This product has exceeded my expectations. Highly recommended!</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial Slider",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "star_rating"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "testimonial_heading": "Great Quality",
+            "testimonial_text": "<p>The quality of this product is outstanding. I will definitely purchase again.</p>"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "testimonial_heading": "Fast Shipping",
+            "testimonial_text": "<p>Not only is the product great, but the shipping was incredibly fast!</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
