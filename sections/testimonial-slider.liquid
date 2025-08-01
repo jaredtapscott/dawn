@@ -1,53 +1,57 @@
-{{ 'section-testimonial-slider.css' | asset_url | stylesheet_tag }}
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'section-testimonial-slider.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
 
 {%- style -%}
   .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-top: 0px;
+    padding-bottom: 0px;
   }
 
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
+      padding-top: 0px;
+      padding-bottom: 0px;
     }
   }
 {%- endstyle -%}
 
-<div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="testimonial-slider section-{{ section.id }}-padding">
-    <div class="page-width">
+<div class="page-width">
+  <div class="color-{{ section.settings.color_scheme }} gradient">
+    <div class="testimonial-slider section-{{ section.id }}-padding">
       <div class="testimonial-slider__grid">
         <!-- First Column: Heading and Star Rating -->
         <div class="testimonial-slider__content">
           {% for block in section.blocks %}
             {% case block.type %}
               {% when 'heading' %}
-                <h2 class="testimonial-slider__heading inline-richtext {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+                <h2
+                  class="testimonial-slider__heading inline-richtext {{ block.settings.heading_size }}"
+                  {{ block.shopify_attributes }}
+                >
                   {{ block.settings.heading }}
                 </h2>
               {% when 'star_rating' %}
                 <div class="testimonial-slider__rating" {{ block.shopify_attributes }}>
                   <div class="star-rating">
-                    {% assign rating = block.settings.rating %}
+                    {% assign rating = block.settings.rating | plus: 0.0 %}
                     {% assign full_stars = rating | floor %}
                     {% assign decimal_part = rating | modulo: 1 %}
                     {% assign has_half_star = false %}
                     {% if decimal_part >= 0.5 %}
                       {% assign has_half_star = true %}
                     {% endif %}
-                    
+
                     <!-- Full stars -->
                     {% for i in (1..full_stars) %}
                       <span class="star star--full">★</span>
                     {% endfor %}
-                    
+
                     <!-- Half star -->
                     {% if has_half_star %}
                       <span class="star star--half">★</span>
                     {% endif %}
-                    
+
                     <!-- Empty stars -->
                     {% assign empty_stars = 5 | minus: full_stars %}
                     {% if has_half_star %}
@@ -67,11 +71,14 @@
         <div class="testimonial-slider__image">
           {% if section.settings.image != blank %}
             {%- assign image_height = section.settings.image.width | divided_by: section.settings.image.aspect_ratio -%}
-            {{ section.settings.image | image_url: width: 600 | image_tag:
-              loading: 'lazy',
-              width: section.settings.image.width,
-              height: image_height,
-              class: 'testimonial-slider__img'
+            {{
+              section.settings.image
+              | image_url: width: 600
+              | image_tag:
+                loading: 'lazy',
+                width: section.settings.image.width,
+                height: image_height,
+                class: 'testimonial-slider__img'
             }}
           {% else %}
             {{ 'image' | placeholder_svg_tag: 'placeholder-svg testimonial-slider__img' }}
@@ -80,11 +87,26 @@
 
         <!-- Third Column: Testimonial Slider -->
         <div class="testimonial-slider__testimonials">
-          <slider-component class="slider-mobile-gutter">
-            <div class="slider slider--mobile" id="Slider-{{ section.id }}">
-              {% assign testimonials = section.blocks | where: 'type', 'testimonial' %}
+          {% assign testimonials = section.blocks | where: 'type', 'testimonial' %}
+          {% assign show_slider = false %}
+          {% if testimonials.size > 1 %}
+            {% assign show_slider = true %}
+          {% endif %}
+
+          <slider-component class="slider-mobile-gutter{% if show_slider %} slider-component-desktop{% endif %}">
+            <ul
+              id="Slider-{{ section.id }}"
+              data-id="{{ section.id }}"
+              class="grid product-grid contains-card grid--1-col-desktop grid--1-col-tablet-down{% if show_slider %} slider slider--desktop slider--tablet{% endif %}"
+              role="list"
+              aria-label="Testimonials"
+            >
               {% for block in testimonials %}
-                <div class="slider__slide testimonial-slide" {{ block.shopify_attributes }}>
+                <li
+                  id="Slide-{{ section.id }}-{{ forloop.index }}"
+                  class="grid__item{% if show_slider %} slider__slide{% endif %}"
+                  {{ block.shopify_attributes }}
+                >
                   <div class="testimonial-card">
                     {% if block.settings.testimonial_heading != blank %}
                       <h3 class="testimonial-card__heading">{{ block.settings.testimonial_heading }}</h3>
@@ -95,16 +117,28 @@
                       </div>
                     {% endif %}
                   </div>
-                </div>
+                </li>
               {% endfor %}
-            </div>
-            
-            {% if testimonials.size > 1 %}
-              <div class="slider-buttons no-js-hidden">
-                <button type="button" class="slider-button slider-button--prev" name="previous" aria-label="Previous slide">
+            </ul>
+
+            {% if show_slider %}
+              <div class="slider-buttons no-js-hidden quick-add-hidden">
+                <button
+                  type="button"
+                  class="slider-button slider-button--prev"
+                  name="previous"
+                  aria-label="Previous testimonial"
+                  aria-controls="Slider-{{ section.id }}"
+                >
                   {{- 'icon-caret.svg' | inline_asset_content -}}
                 </button>
-                <button type="button" class="slider-button slider-button--next" name="next" aria-label="Next slide">
+                <button
+                  type="button"
+                  class="slider-button slider-button--next"
+                  name="next"
+                  aria-label="Next testimonial"
+                  aria-controls="Slider-{{ section.id }}"
+                >
                   {{- 'icon-caret.svg' | inline_asset_content -}}
                 </button>
               </div>
@@ -209,11 +243,11 @@
       "limit": 1,
       "settings": [
         {
-          "type": "number",
+          "type": "text",
           "id": "rating",
           "label": "Rating",
           "info": "Enter a decimal number from 0 to 5 (e.g., 4.5)",
-          "default": 5.0
+          "default": "5.0"
         }
       ]
     },
@@ -224,13 +258,13 @@
         {
           "type": "text",
           "id": "testimonial_heading",
-          "label": "Testimonial Heading",
+          "label": "Testimonial",
           "default": "Amazing Product!"
         },
         {
           "type": "richtext",
           "id": "testimonial_text",
-          "label": "Testimonial Text",
+          "label": "Author",
           "default": "<p>This product has exceeded my expectations. Highly recommended!</p>"
         }
       ]
@@ -268,3 +302,57 @@
   ]
 }
 {% endschema %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Wait for Dawn's SliderComponent to be defined
+    setTimeout(function () {
+      const testimonialSliders = document.querySelectorAll('.testimonial-slider__testimonials slider-component');
+
+      testimonialSliders.forEach(function (sliderComponent) {
+        const slider = sliderComponent.querySelector('[id^="Slider-"]');
+        const slides = sliderComponent.querySelectorAll('.slider__slide');
+
+        if (!slider || slides.length <= 1) return;
+
+        let currentSlide = 0;
+        let autoplayInterval;
+
+        function goToNextSlide() {
+          currentSlide = (currentSlide + 1) % slides.length;
+          const slideWidth = slides[0].offsetWidth;
+          slider.scrollTo({
+            left: slideWidth * currentSlide,
+            behavior: 'smooth',
+          });
+        }
+
+        function startAutoplay() {
+          autoplayInterval = setInterval(goToNextSlide, 3000);
+        }
+
+        function stopAutoplay() {
+          if (autoplayInterval) {
+            clearInterval(autoplayInterval);
+          }
+        }
+
+        // Start autoplay
+        startAutoplay();
+
+        // Pause autoplay on hover
+        sliderComponent.addEventListener('mouseenter', stopAutoplay);
+        sliderComponent.addEventListener('mouseleave', startAutoplay);
+
+        // Pause autoplay when user manually navigates
+        const buttons = sliderComponent.querySelectorAll('.slider-button');
+        buttons.forEach(function (button) {
+          button.addEventListener('click', function () {
+            stopAutoplay();
+            setTimeout(startAutoplay, 5000); // Resume after 5 seconds
+          });
+        });
+      });
+    }, 100); // Small delay to ensure components are initialized
+  });
+</script>

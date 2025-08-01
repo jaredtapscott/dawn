@@ -6,14 +6,20 @@
 .testimonial-slider__grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 4rem;
+  gap: 0rem;
   align-items: center;
+  width: 100%;
+}
+
+.testimonial-slider__grid > * {
+  min-width: 0;
+  max-width: 100%;
 }
 
 @media screen and (max-width: 990px) {
   .testimonial-slider__grid {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 0rem;
   }
 }
 
@@ -21,7 +27,9 @@
 .testimonial-slider__content {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  justify-content: space-between;
+  height: 100%;
+  padding: 60px;
 }
 
 .testimonial-slider__heading {
@@ -74,32 +82,68 @@
 /* Second Column - Image */
 .testimonial-slider__image {
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
 }
 
 .testimonial-slider__img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
-  border-radius: 1rem;
+  border-radius: 0;
 }
 
 /* Third Column - Testimonials Slider */
 .testimonial-slider__testimonials {
   position: relative;
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
 }
 
-.testimonial-slide {
-  width: 100%;
-  flex-shrink: 0;
+.testimonial-slider__testimonials .slider-mobile-gutter {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.testimonial-slider__testimonials .grid {
+  margin: 0;
+  padding: 0;
+}
+
+.testimonial-slider__testimonials .slider {
+  display: flex;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+}
+
+.testimonial-slider__testimonials .slider__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  margin: 0;
+  padding: 0;
+}
+
+/* Override Dawn's default first slide styling */
+.testimonial-slider__testimonials .slider--desktop .slider__slide:first-child {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.testimonial-slider__testimonials .grid__item {
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0;
 }
 
 .testimonial-card {
-  background: rgb(var(--color-card-background));
-  border: 1px solid rgba(var(--color-foreground), 0.1);
-  border-radius: 1rem;
-  padding: 2.4rem;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 6rem;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -108,9 +152,11 @@
 
 .testimonial-card__heading {
   margin: 0;
-  font-size: 1.8rem;
-  font-weight: 600;
+  font-size: 2.5rem;
+  font-weight: 700;
   color: rgb(var(--color-foreground));
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
 }
 
 .testimonial-card__text {
@@ -177,7 +223,7 @@
   }
   
   .testimonial-card {
-    padding: 2rem;
+    padding: 1.5rem;
   }
   
   .star-rating {

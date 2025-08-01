@@ -44,13 +44,14 @@
         "button"
       ],
       "settings": {
+        "image": "shopify://shop_images/ritual-hero.png",
         "image_overlay_opacity": 20,
         "image_height": "large",
         "image_behavior": "none",
         "desktop_content_position": "top-left",
         "desktop_content_alignment": "left",
         "show_text_box": false,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-3",
         "stack_images_on_mobile": false,
         "mobile_content_alignment": "center",
         "show_text_below": false
@@ -122,6 +123,98 @@
         "padding_bottom": 40
       }
     },
+    "testimonial_slider_FPzQMi": {
+      "type": "testimonial-slider",
+      "blocks": {
+        "heading_AVndkR": {
+          "type": "heading",
+          "settings": {
+            "heading": "Functional Luxury",
+            "heading_size": "h1"
+          }
+        },
+        "star_rating_yLmQDp": {
+          "type": "star_rating",
+          "settings": {
+            "rating": "5.0"
+          }
+        },
+        "testimonial_cV34ga": {
+          "type": "testimonial",
+          "settings": {
+            "testimonial_heading": "This product has exceeded my expectations. Highly recommended!",
+            "testimonial_text": "<p>Anita B.</p>"
+          }
+        },
+        "testimonial_xEMMqp": {
+          "type": "testimonial",
+          "settings": {
+            "testimonial_heading": "Great Quality",
+            "testimonial_text": "<p>The quality of this product is outstanding. I will definitely purchase again.</p>"
+          }
+        },
+        "testimonial_7pg4pQ": {
+          "type": "testimonial",
+          "settings": {
+            "testimonial_heading": "Fast Shipping",
+            "testimonial_text": "<p>Not only is the product great, but the shipping was incredibly fast!</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_AVndkR",
+        "star_rating_yLmQDp",
+        "testimonial_cV34ga",
+        "testimonial_xEMMqp",
+        "testimonial_7pg4pQ"
+      ],
+      "name": "Testimonial Slider",
+      "settings": {
+        "image": "shopify://shop_images/Main.jpg",
+        "color_scheme": "scheme-5d358650-c3f5-41d4-bfd6-a2b63e09c0c4",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "rich_text_JMKkMe": {
+      "type": "rich-text",
+      "blocks": {
+        "icon_DaLArq": {
+          "type": "icon",
+          "settings": {
+            "icon": "gift",
+            "icon_size": "large"
+          }
+        },
+        "heading_tibKJb": {
+          "type": "heading",
+          "settings": {
+            "heading": "Gift Sets",
+            "heading_size": "uppercase"
+          }
+        },
+        "text_aTHYfx": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Share the gift of bread.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "icon_DaLArq",
+        "heading_tibKJb",
+        "text_aTHYfx"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 0
+      }
+    },
     "collage": {
       "type": "collage",
       "blocks": {
@@ -151,7 +244,7 @@
         "collection-1"
       ],
       "settings": {
-        "heading": "Multimedia collage",
+        "heading": "",
         "heading_size": "h2",
         "desktop_layout": "left",
         "mobile_layout": "collage",
@@ -233,6 +326,8 @@
     "image_banner",
     "rich_text",
     "featured_collection",
+    "testimonial_slider_FPzQMi",
+    "rich_text_JMKkMe",
     "collage",
     "video",
     "multicolumn"
