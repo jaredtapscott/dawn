@@ -218,6 +218,12 @@
   font-weight: bold;
 }
 
+/* "From" text styling */
+.price-from {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
 .card__footer-button {
   flex-shrink: 0;
 }
